@@ -228,7 +228,7 @@ for GodMode in GodModes.index:
             <a href="https://etherscan.io/token/{contract}?a={GodMode}"
             class="gmTooltip" data-tooltip="History of GodMode#{GodMode}"
             target="blank_">
-            {GodMode} (GodMode#{GodMode})
+            {GodMode}
             </a>
         </td>
 
