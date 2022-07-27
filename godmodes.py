@@ -230,6 +230,7 @@ for GodMode in GodModes.index:
             target="blank_">
             {GodMode}
             </a>
+            <span style="display: none;"> #{GodMode} </span>
         </td>
 
         <td>
