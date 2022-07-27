@@ -146,8 +146,8 @@ for GodMode in GodModes.index:
     external_url = GodModes['External URL'][GodMode]
 
     image = GodModes['Thumbnail'][GodMode]
-    width = '150'
-    height = '100'
+    width = '200'
+    height = '148'
     image.replace('w_256,h_256', f'w_{width},h_{height}')
     full_size = GodModes['Full size image'][GodMode]
     three_d_image = './Contents/3D.png'
