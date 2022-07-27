@@ -146,6 +146,9 @@ for GodMode in GodModes.index:
     external_url = GodModes['External URL'][GodMode]
 
     image = GodModes['Thumbnail'][GodMode]
+    width = '150'
+    height = '100'
+    image.replace('w_256,h_256', f'w_{width},h_{height}')
     full_size = GodModes['Full size image'][GodMode]
     three_d_image = './Contents/3D.png'
 
@@ -202,8 +205,8 @@ for GodMode in GodModes.index:
             <a href="{external_url}" target="blank_">
                 <div class="try-me">
                     <img class="first-image" src="{image}"
-                    width="200px" height="148px" alt="Try Me!" loading="lazy"/>
-                    <img src="{three_d_image}" width='200px' alt="Try Me!" />
+                    width="{width}px" height="{height}px" alt="Try Me!" loading="lazy"/>
+                    <img src="{three_d_image}" width='{width}px' alt="Try Me!" />
                 </div>
             </a>
 
@@ -225,7 +228,7 @@ for GodMode in GodModes.index:
             <a href="https://etherscan.io/token/{contract}?a={GodMode}"
             class="gmTooltip" data-tooltip="History of GodMode#{GodMode}"
             target="blank_">
-            #{GodMode}
+            {GodMode} (Godmode#{Godmode})
             </a>
         </td>
 
@@ -303,7 +306,8 @@ for GodMode in GodModes.index:
             <div class="gmTooltip" data-tooltip="Exact amount: {poo}">
                 <u>
                     {"{}".format(poo)}
-                    ({"{:.8f}".format(float("{}".format(poo))* 100)}%)
+                    <br>
+                    ({"{:.12f}".format(float("{}".format(poo))* 100)}%)
                 </u>
             </div>
         </td>
