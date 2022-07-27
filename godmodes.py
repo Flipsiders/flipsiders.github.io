@@ -302,8 +302,8 @@ for GodMode in GodModes.index:
         <td>
             <div class="gmTooltip" data-tooltip="Exact amount: {poo}">
                 <u>
-                    {"{:.4f}".format(poo)}
-                    ({"{:.2f}".format(float("{:.4f}".format(poo))* 100)}%)
+                    {"{}".format(poo)}
+                    ({"{:.8f}".format(float("{}".format(poo))* 100)}%)
                 </u>
             </div>
         </td>
