@@ -202,7 +202,7 @@ for GodMode in GodModes.index:
             <a href="{external_url}" target="blank_">
                 <div class="try-me">
                     <img class="first-image" src="{image}"
-                    width="200px" height="148px" alt="Try Me!" />
+                    width="200px" height="148px" alt="Try Me!" loading="lazy"/>
                     <img src="{three_d_image}" width='200px' alt="Try Me!" />
                 </div>
             </a>
