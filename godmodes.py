@@ -10,6 +10,7 @@ import glob
 
 contract = '0x903e2f5d42ee23156d548dd46bb84b7873789e44'
 
+tic = time.time()
 def rank_calculator(trait, type):
     trait_dictionary = traits.get(type)
 
@@ -354,3 +355,8 @@ prettyHTML = prettyHTML.replace('&amp;', '&')
 
 with open('godmodes.html', 'w') as f:
     f.write(prettyHTML)
+
+toc = time.time()
+elapsed_time = toc - tic
+elapsed_time = '{:.3f}'.format(elapsed_time)
+print(f'The elapsed time of the rendering process: ~{elapsed_time}s')

@@ -19,7 +19,7 @@ WITH variables AS (
 	SELECT '{contract}' AS godmode
 ), mints AS (
   SELECT
-  	TOKENID AS ID,
+  	TOKENID,
   	NFT_TO_ADDRESS AS summoner,
   	TX_HASH AS summon_txn,
   	BLOCK_TIMESTAMP AS summon_date
@@ -28,7 +28,7 @@ WITH variables AS (
 )
 
 SELECT * FROM mints
-ORDER BY CAST(ID AS INT) ASC
+ORDER BY CAST(TOKENID AS INT) ASC
 '''
 
 # functions
@@ -39,7 +39,7 @@ def pull_metadata(id):
         URL
     ).text
     if (id%100 == 0):
-        print(f'Metadata of Godmdoes {id}-{id+100} retrieved.')
+        print('Metadata of Godmdoes {:03d}-{} retrieved.'.format(id, id+100))
     return(metadata)
 
 def create_query():
@@ -97,12 +97,13 @@ if not isinstance(raw_data, pd.DataFrame):
 GodModes_hardcopy = pd.DataFrame.from_dict(raw_data)
 
 GodModes_hardcopy = GodModes_hardcopy[:]
-GodModes_hardcopy.ID = GodModes_hardcopy.ID.apply(int)
+GodModes_hardcopy.TOKENID = GodModes_hardcopy.TOKENID.apply(int)
 
-GodModes_hardcopy['Metadata'] = GodModes_hardcopy.ID.apply(lambda x: pull_metadata(x))
+GodModes_hardcopy['Metadata'] = GodModes_hardcopy.TOKENID.apply(lambda x: pull_metadata(x))
 
 GodModes_hardcopy.to_csv(f'Godmodes-{int(time.time())}.csv')
 
 toc = time.time()
 elapsed_time = toc - tic
-print(f'\nTotal elapsed time: {elapsed_time}s')
+elapsed_time = '{:.3f}'.format(elapsed_time)
+print(f'\nThe elapsed time of the pulling process: ~{elapsed_time}s')
