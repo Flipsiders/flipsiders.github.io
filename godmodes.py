@@ -37,7 +37,7 @@ def rank_categorizer(rank):
     elif 100 < rank and rank <= 500:
         cat = 'Top 500 (50%)'
     else:
-        cat = 'Ordinary'
+        cat = 'Bottom 500'
     
     return cat
 
@@ -300,41 +300,41 @@ for GodMode in GodModes.index:
             <a href={opensea_query.format(trait='Back', value=Back)}>
             {Back} 
             </a>
-            <u class="gmTooltip"
-            data-tooltip="{int(Back_PoO*1000)} of 1000 GodModes">
-            ({Back_PoO}</u> have this trait)
+            (<u class="gmTooltip"
+            data-tooltip="{int(Back_PoO*1000)} of 1000 GodModes ({Back_PoO*100}% have this trait)">
+            {Back_PoO}</u>)
             <br>
             Front:
             <a href={opensea_query.format(trait='Front', value=Front)}>
             {Front}
             </a>
-            <u class="gmTooltip"
-            data-tooltip="{int(Front_PoO*1000)} of 1000 GodModes">
-            ({Front_PoO}</u> have this trait)
+            (<u class="gmTooltip"
+            data-tooltip="{int(Front_PoO*1000)} of 1000 GodModes ({Front_PoO*100}% have this trait)">
+            {Front_PoO}</u>)
             <br>
             Under:
             <a href={opensea_query.format(trait='Under', value=Under)}>
             {Under}
             </a>
-            <u class="gmTooltip"
-            data-tooltip="{int(Under_PoO*1000)} of 1000 GodModes">
-            ({Under_PoO}</u> have this trait)
+            (<u class="gmTooltip"
+            data-tooltip="{int(Under_PoO*1000)} of 1000 GodModes ({Under_PoO*100}% have this trait)">
+            {Under_PoO}</u>)
             <br>
             Spectrum:
             <a href={opensea_query.format(trait='Spectrum', value=Spectrum)}>
             {Spectrum}
             </a>
-            <u class="gmTooltip"
-            data-tooltip="{int(Spectrum_PoO*1000)} of 1000 GodModes">
-            ({Spectrum_PoO}</u> have this trait)
+            (<u class="gmTooltip"
+            data-tooltip="{int(Spectrum_PoO*1000)} of 1000 GodModes ({Spectrum_PoO*100}% have this trait)">
+            {Spectrum_PoO}</u>)
             <br>
             Substance:
             <a href={opensea_query.format(trait='Substance', value=Substance)}>
             {Substance}
             </a>
-            <u class="gmTooltip"
-            data-tooltip="{int(Substance_PoO*1000)} of 1000 GodModes">
-            ({Substance_PoO}</u> have this trait)
+            (<u class="gmTooltip"
+            data-tooltip="{int(Substance_PoO*1000)} of 1000 GodModes ({Substance_PoO*100}% have this trait)">
+            {Substance_PoO}</u>)
             <br>
         </td>
 
