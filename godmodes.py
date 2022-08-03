@@ -8,6 +8,7 @@ import time
 from bs4 import BeautifulSoup as bs
 import glob
 import datetime
+import math
 
 contract = '0x903e2f5d42ee23156d548dd46bb84b7873789e44'
 
@@ -107,6 +108,11 @@ GodModes = GodModes.rename(columns = {
     'value.2': 'Under',
     'value.3': 'Spectrum',
     'value.4': 'Substance',
+    'CURRENT_OWNER': 'Current owner',
+    'PRICE': 'Price',
+    'PRICE_USD': 'Price in USD',
+    'LAST_TRANSFER_TIME': 'Last transfer',
+    'TX_HASH': 'Last transfer TXN'
 })
 
 # Analyzing the tables
@@ -138,9 +144,11 @@ GodModes['PoO'] = GodModes.apply(
 GodModes['Rank'] = GodModes['PoO'].rank(ascending=True, method='first')
 GodModes = GodModes.sort_values('Rank')
 
+GodModes['Last transfer'] = pd.to_datetime(GodModes['Last transfer'], format='%Y-%m-%d %H:%M:%S')
+
 GodModes['Category'] = GodModes['Rank'].apply(rank_categorizer)
 
-holders = list(GodModes['CURRENT_OWNER'])
+holders = list(GodModes['Current owner'])
 holders = {holder: holders.count(holder) for holder in set(holders)}
 
 # Initializing the HTML file
@@ -168,7 +176,7 @@ for GodMode in GodModes.index:
     summon_transaction = GodModes['Summon TXN'][GodMode]
     mint_date = GodModes['Mint date'][GodMode]
 
-    owner = GodModes['CURRENT_OWNER'][GodMode]
+    owner = GodModes['Current owner'][GodMode]
     holds = holders.setdefault(owner, 1)
     holds = (f'Holds {holds} Godmodes', f'Holds {holds} Godmode')[holds == 1]
 
@@ -185,6 +193,25 @@ for GodMode in GodModes.index:
     Substance_PoO = GodModes['Substance_PoO'][GodMode]
 
     poo = GodModes['PoO'][GodMode]
+
+    price = GodModes['Price'][GodMode]
+    usd_price = GodModes['Price in USD'][GodMode]
+    last_transfer = GodModes['Last transfer'][GodMode]
+    last_transfer = datetime.datetime.strftime(last_transfer, '%Y-%m-%d')
+    last_transfer_transaction = GodModes['Last transfer TXN'][GodMode]
+
+    if math.isnan(price):
+        price = '-'
+    else:
+        price = f'''
+            {price}Ξ (${usd_price} on {last_transfer})
+            <br/>
+            <a href="https://etherscan.com/tx/{last_transfer_transaction}"
+            class="gmTooltip" data-tooltip="{last_transfer_transaction}"
+            target="blank_">
+            {address_shortener(last_transfer_transaction)}
+            </a>
+        '''
 
     category = GodModes['Category'][GodMode]
     category_color = ''
@@ -321,6 +348,10 @@ for GodMode in GodModes.index:
             </div>
         </td>
 
+        <td>
+            {price}
+        </td>
+
         <td style="background-image: {category_color}">
             {category}
         </td>
@@ -346,6 +377,7 @@ thead = '''
         <th>Current owner</th>
         <th>Attributes</th>
         <th>Probability of Occurrence</th>
+        <th>Last price</th>
         <th>Category</th>
     </tr>
 '''
