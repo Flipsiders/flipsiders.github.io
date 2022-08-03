@@ -253,7 +253,7 @@ for GodMode in GodModes.index:
         </td>
 
         <td>
-            <a href="https://etherscan.com/address/{owner}"
+            <a href="https://etherscan.io/token/{contract}?a={owner}"
             class="gmTooltip" data-tooltip="{owner}"
             target="blank_">
             {address_shortener(owner)}
