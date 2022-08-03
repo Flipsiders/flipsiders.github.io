@@ -7,6 +7,7 @@ import json
 import time
 from bs4 import BeautifulSoup as bs
 import glob
+import datetime
 
 contract = '0x903e2f5d42ee23156d548dd46bb84b7873789e44'
 
@@ -139,6 +140,9 @@ GodModes = GodModes.sort_values('Rank')
 
 GodModes['Category'] = GodModes['Rank'].apply(rank_categorizer)
 
+holders = list(GodModes['CURRENT_OWNER'])
+holders = {holder: holders.count(holder) for holder in set(holders)}
+
 # Initializing the HTML file
 tbody = ''
 for GodMode in GodModes.index:
@@ -164,7 +168,9 @@ for GodMode in GodModes.index:
     summon_transaction = GodModes['Summon TXN'][GodMode]
     mint_date = GodModes['Mint date'][GodMode]
 
-    owner = GodModes['Owner'][GodMode]
+    owner = GodModes['CURRENT_OWNER'][GodMode]
+    holds = holders.setdefault(owner, 1)
+    holds = (f'Holds {holds} Godmodes', f'Holds {holds} Godmode')[holds == 1]
 
     Back = GodModes['Back'][GodMode]
     Front = GodModes['Front'][GodMode]
@@ -258,6 +264,7 @@ for GodMode in GodModes.index:
             target="blank_">
             {address_shortener(owner)}
             </a>
+            <br/>{holds}
             <span style="display: none;">{owner}</span>
         </td>
         
@@ -343,10 +350,13 @@ thead = '''
     </tr>
 '''
 
+ts = datetime.datetime.fromtimestamp(int(time.time())).strftime('%Y-%m-%d %H:%M:%S')
+
 html = html.format(
     table_script=script,
+    last_update_timestamp=ts,
     table_thead=thead,
-    table_tbody=tbody
+    table_tbody=tbody,
 )
 
 html = bs(html, 'lxml')
