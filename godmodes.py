@@ -89,8 +89,7 @@ GodModes = GodModes.drop(columns=[
     'tokenUri.raw', 'contract.address',
     'tokenUri.gateway', 'metadata.background_color',
     'metadata.description', 'metadata.name',
-    'metadata.image', 'format.0',
-    'gateway.0', 'trait_type.0',
+    'metadata.image', 'format.0', 'trait_type.0',
     'trait_type.1', 'trait_type.2',
     'trait_type.3', 'trait_type.4',
 ])
@@ -103,6 +102,7 @@ GodModes = GodModes.rename(columns = {
     'metadata.external_url': 'External URL',
     'raw.0': 'Full size image',
     'thumbnail.0': 'Thumbnail',
+    'gateway.0': 'Gateway',
     'value.0': 'Back',
     'value.1': 'Front',
     'value.2': 'Under',
@@ -159,6 +159,10 @@ for GodMode in GodModes.index:
     external_url = GodModes['External URL'][GodMode]
 
     image = GodModes['Thumbnail'][GodMode]
+    if pd.isnull(image):
+        image = GodModes['Gateway'][GodMode]
+        image = image.replace('upload', 'upload/w_256,h_256')
+        
     width = '200'
     height = '148'
     image.replace('w_256,h_256', f'w_{width},h_{height}')
